@@ -10,7 +10,7 @@ public class CardManager : MonoBehaviour {
     [HideInInspector]
     public string[] PlayedСards_Player, PlayedСards_Bot;
     [HideInInspector]
-    public GameObject[] BotTemp, PlayerTemp;
+    public List<string> BotTemp, PlayerTemp;
 
     void Start ()
     {

@@ -20,7 +20,7 @@ public class GameProcess : MonoBehaviour {
     public bool Pass = false, EnemyPass = false, End = false, YourTurn = false, BotTurn = false, CardDelete = false;
 
     [HideInInspector]
-    public bool EndOfRound = false;
+    public bool EndOfRound = false, EnemyRound = false, PlayerRound = false;
 
     private string[] CardOnField;
 
@@ -65,7 +65,6 @@ public class GameProcess : MonoBehaviour {
     {
         if (EnemyPass == true && Pass == true)
         {
-            //Process();
             StartCoroutine("RoundEnd");
         }
 
@@ -165,7 +164,23 @@ public class GameProcess : MonoBehaviour {
             k += 5;
         }
 
-        FirstMove();
+        //Random First Step!!!!
+        if (Random.Range(1, 10) >= 5)
+        {
+            Info.text = "Your Turn";
+            yield return new WaitForSeconds(3);
+            Info.text = "";
+            End = false;    //Your turn
+            YourTurn = true;
+        }
+        else
+        {
+            Info.text = "Enemy Turn";
+            yield return new WaitForSeconds(3);
+            Info.text = "";
+            End = true;     //Enemy turn
+            BotTurn = true;
+        }
     }
 
     IEnumerator NewRound()
@@ -179,10 +194,18 @@ public class GameProcess : MonoBehaviour {
         NewCards = new GameObject[number];
         Debug.Log(number);
 
-        Info.text = "Round 2";
-
-        yield return new WaitForSeconds(3);
-        Info.text = "";
+        if (RoundCount == 2)
+        {
+            Info.text = "Round 2";
+            yield return new WaitForSeconds(3);
+            Info.text = "";
+        }
+        else
+        {
+            Info.text = "Round 3";
+            yield return new WaitForSeconds(3);
+            Info.text = "";
+        }
 
         k = 0;
         FindObjectOfType<PowerCounter>().MyCurrentPower = 0;
@@ -194,7 +217,7 @@ public class GameProcess : MonoBehaviour {
         FindObjectOfType<PowerCounter>().EnemyCurrentPower = 0;
         FindObjectOfType<PowerCounter>().EnemyPower.text = "0";
         FindObjectOfType<Enemy_Enter>().CardCount = 0;
-        FindObjectOfType<Bot>().Count = 0;
+        //FindObjectOfType<Bot>().Count = 0;
         //FindObjectOfType<CardManager>().BotTemp = new GameObject[FindObjectOfType<CardManager>().BotTemp.Length - FindObjectOfType<Bot>().Count];
 
         FindObjectOfType<Bot>().EndPoint = new Vector3(-16, 54, 48);
@@ -208,9 +231,9 @@ public class GameProcess : MonoBehaviour {
         for (int i = 0; i < FindObjectOfType<CardManager>().BotCards.Length; i++)
         {
             int Flag = 0;
-            for (int j = 0; j < FindObjectOfType<CardManager>().PlayedСards_Bot.Length; j++)
+            for (int j = 0; j < FindObjectOfType<CardManager>().BotTemp.Count; j++)
             {
-                if (FindObjectOfType<CardManager>().PlayedСards_Bot[j] == FindObjectOfType<CardManager>().BotCards[i].GetComponent<CardInfo>().id)
+                if (FindObjectOfType<CardManager>().BotTemp[j] == FindObjectOfType<CardManager>().BotCards[i].GetComponent<CardInfo>().id)
                 {
                     Flag = 1;
                 }
@@ -221,7 +244,7 @@ public class GameProcess : MonoBehaviour {
                 s++;*/
                 Instantiate(FindObjectOfType<CardManager>().BotCards[i], new Vector3(x1 + k, y1, z1), Quaternion.Euler(0, 180, 180));  //Bot Cards
                 k += 5;
-                FindObjectOfType<Bot>().StartCount++;
+                //FindObjectOfType<Bot>().StartCount++;
             }
         }
 
@@ -231,9 +254,9 @@ public class GameProcess : MonoBehaviour {
         for (int i = 0; i < FindObjectOfType<CardManager>().PlayerCards.Length; i++)
         {
             int Flag = 0;
-            for (int j = 0; j < FindObjectOfType<CardManager>().PlayedСards_Player.Length; j++)
+            for (int j = 0; j < FindObjectOfType<CardManager>().PlayerTemp.Count; j++)
             {
-                if (FindObjectOfType<CardManager>().PlayedСards_Player[j] == FindObjectOfType<CardManager>().PlayerCards[i].GetComponent<CardInfo>().id)
+                if (FindObjectOfType<CardManager>().PlayerTemp[j] == FindObjectOfType<CardManager>().PlayerCards[i].GetComponent<CardInfo>().id)
                 {
                     Flag = 1;
                 }
@@ -244,7 +267,30 @@ public class GameProcess : MonoBehaviour {
                 k += 5;
             }
         }
-        
+
+        if(PlayerRound == true)
+        {
+            Info.text = "Your Turn";
+            yield return new WaitForSeconds(3);
+            Info.text = "";
+            End = false;
+            BotTurn = false;
+            YourTurn = true;
+            FindObjectOfType<End>().EndCheck = true;
+            FindObjectOfType<Pass>().PassCheck = false;
+        }
+        else if(EnemyRound == true)
+        {
+            Info.text = "Enemy Turn";
+            yield return new WaitForSeconds(3);
+            Info.text = "";
+            End = true;
+            BotTurn = true;
+            YourTurn = false;
+            FindObjectOfType<End>().EndCheck = false;
+            FindObjectOfType<Pass>().PassCheck = true;
+        }
+        FindObjectOfType<Bot>().Count = 0;
     }
 
     IEnumerator RoundEnd()
@@ -254,6 +300,8 @@ public class GameProcess : MonoBehaviour {
 
         RoundCount++;
         CardDelete = true;
+        End = false;
+        BotTurn = false;
 
         if (FindObjectOfType<PowerCounter>().MyCurrentPower > FindObjectOfType<PowerCounter>().EnemyCurrentPower)
         { 
@@ -264,6 +312,7 @@ public class GameProcess : MonoBehaviour {
                 Info.text = "You Win";
                 yield return new WaitForSeconds(3);
                 Info.text = "";
+                PlayerRound = true;
 
                 Round2();
             }
@@ -272,6 +321,7 @@ public class GameProcess : MonoBehaviour {
                 Info.text = "You Win";
                 yield return new WaitForSeconds(3);
                 Info.text = "";
+                PlayerRound = true;
 
                 Round3();
             }
@@ -285,6 +335,7 @@ public class GameProcess : MonoBehaviour {
                 Info.text = "You Lose";
                 yield return new WaitForSeconds(3);
                 Info.text = "";
+                EnemyRound = true;
 
                 Round2();
             }
@@ -293,6 +344,7 @@ public class GameProcess : MonoBehaviour {
                 Info.text = "You Lose";
                 yield return new WaitForSeconds(3);
                 Info.text = "";
+                EnemyRound = true;
 
                 Round3();
             }
@@ -307,6 +359,8 @@ public class GameProcess : MonoBehaviour {
                 Info.text = "Draw";
                 yield return new WaitForSeconds(3);
                 Info.text = "";
+                PlayerRound = true;
+                EnemyRound = false;
 
                 Round2();
             }
@@ -315,6 +369,8 @@ public class GameProcess : MonoBehaviour {
                 Info.text = "Draw";
                 yield return new WaitForSeconds(3);
                 Info.text = "";
+                PlayerRound = true;
+                EnemyRound = false;
 
                 Round3();
             }
@@ -347,24 +403,6 @@ public class GameProcess : MonoBehaviour {
             //Debug.Log(num[i]);
         }
         return num;
-    }
-
-    //Random First Step!!!!
-    void FirstMove()
-    {
-        int move;
-        move = Random.Range(1, 10);
-
-        if (move >= 5)
-        {
-            End = false;    //Your turn
-            YourTurn = true;
-        }
-        else
-        {
-            End = true;     //Enemy turn
-            BotTurn = true;
-        }
     }
 
 }

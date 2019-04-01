@@ -37,11 +37,13 @@ public class Bot : MonoBehaviour {
 
     public void Move()
     {
-        if (FindObjectOfType<PowerCounter>().EnemyCurrentPower >= FindObjectOfType<PowerCounter>().MyCurrentPower &&
-            FindObjectOfType<GameProcess>().Pass == true || Count >= 8 || i == StartCount)
+        if (//FindObjectOfType<PowerCounter>().EnemyCurrentPower >= FindObjectOfType<PowerCounter>().MyCurrentPower &&
+            FindObjectOfType<GameProcess>().Pass == true || Count >= 10 || FindObjectOfType<Enemy_Enter>().CardCount == 8 || i == StartCount)
         {
             Debug.Log("sjdjfgapdsofjpo");
             FindObjectOfType<GameProcess>().EnemyPass = true;
+            FindObjectOfType<GameProcess>().BotTurn = false;
+            FindObjectOfType<GameProcess>().End = false;
         }
 
         if (FindObjectOfType<GameProcess>().End == true || FindObjectOfType<GameProcess>().BotTurn == true)
@@ -57,12 +59,14 @@ public class Bot : MonoBehaviour {
                 CurrentCards.transform.position = Vector3.MoveTowards(CurrentCards.transform.position, EndPoint, 0.5f);
                 CardsOnField[i] = Tags[i];
 
-                FindObjectOfType<CardManager>().PlayedСards_Bot[i] = CurrentCards.GetComponent<CardInfo>().id;
+                //FindObjectOfType<CardManager>().PlayedСards_Bot[i] = CurrentCards.GetComponent<CardInfo>().id;
+                FindObjectOfType<CardManager>().BotTemp.Add(CurrentCards.GetComponent<CardInfo>().id);  //List
 
                 if (CurrentCards.transform.position == EndPoint)
                 {
                     Power = CurrentCards.GetComponent<CardInfo>().Power;
-                    FindObjectOfType<PowerCounter>().EnemyCounter(Power);
+                    //FindObjectOfType<PowerCounter>().EnemyCounter(Power);
+                    CurrentCards.GetComponent<CardInfo>().AbilityCheck = true;
 
                     FindObjectOfType<GameProcess>().End = false;
                     EndPoint.x += 4.5f;
@@ -75,7 +79,6 @@ public class Bot : MonoBehaviour {
                     FindObjectOfType<Pass>().PassCheck = true;
 
                     Debug.Log(i);
-
                     //if (i == Tags.Length || FindObjectOfType<GameProcess>().Pass == true)
 
                     if (FindObjectOfType<GameProcess>().Pass != true)
@@ -87,11 +90,13 @@ public class Bot : MonoBehaviour {
             }
         }
 
-        if (FindObjectOfType<PowerCounter>().EnemyCurrentPower >= FindObjectOfType<PowerCounter>().MyCurrentPower &&
-            FindObjectOfType<GameProcess>().Pass == true || Count >= 8 || i == StartCount)
+        if (//FindObjectOfType<PowerCounter>().EnemyCurrentPower >= FindObjectOfType<PowerCounter>().MyCurrentPower &&
+            FindObjectOfType<GameProcess>().Pass == true || Count >= 10 || FindObjectOfType<Enemy_Enter>().CardCount == 8 || i == StartCount)
         {
             Debug.Log("sjdjfgapdsofjpo");
             FindObjectOfType<GameProcess>().EnemyPass = true;
+            FindObjectOfType<GameProcess>().BotTurn = false;
+            FindObjectOfType<GameProcess>().End = false;
         }
 
     }

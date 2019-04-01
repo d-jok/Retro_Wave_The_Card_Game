@@ -237,8 +237,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MusicClips:
-  - {fileID: 8300000, guid: 01188176e6f20a6458caf72b6d0e3294, type: 3}
+  - {fileID: 8300000, guid: 65ed9f0709ae04e44af8fe124177d07f, type: 3}
   - {fileID: 8300000, guid: abdc75d83ce281147bcc7c8a2ac5c0ab, type: 3}
+  - {fileID: 8300000, guid: 41fff98230bd75c489ee172d22ded054, type: 3}
   - {fileID: 8300000, guid: f92beb223bcf9c644bf19448807cbf68, type: 3}
   clipTitleText: {fileID: 499399778}
 --- !u!4 &1408699
@@ -3171,9 +3172,9 @@ MonoBehaviour:
   - {fileID: 1335536293459362, guid: 7d3141fa038a22542814b335028e1eec, type: 2}
   - {fileID: 1798988416902142, guid: 6a92413d2e675294eab98e5b20de3fb6, type: 2}
   - {fileID: 1083108104998434, guid: 69386c4bff0a117478752d1c448e111e, type: 2}
-  - {fileID: 1640874500971356, guid: ba6a890fe5f9cfd45a7a14168ba71c05, type: 2}
+  - {fileID: 1131684165284626, guid: ba6a890fe5f9cfd45a7a14168ba71c05, type: 2}
   - {fileID: 1101330790743242, guid: d97156a37f08fda4d9558bc4678f2665, type: 2}
-  - {fileID: 1678267894357910, guid: 931d34faa4ba81a44bf77e7aba84ad13, type: 2}
+  - {fileID: 1513239523256472, guid: 931d34faa4ba81a44bf77e7aba84ad13, type: 2}
   - {fileID: 1607158609228210, guid: dd18871bfd20bff4cb940a36b4250910, type: 2}
   - {fileID: 1375664709449080, guid: 6a94fdbe53d737649884f184503b0a8c, type: 2}
   - {fileID: 1323570468256884, guid: 336d4ed61cd3ddb49880f5546bafda2e, type: 2}
@@ -3181,12 +3182,12 @@ MonoBehaviour:
   PlayerCards:
   - {fileID: 1505883682824716, guid: a400245b88768da4f8ada7ada4c2c554, type: 2}
   - {fileID: 1719175893538196, guid: f57a6b3f6aa402c45967baba926b47b3, type: 2}
-  - {fileID: 1219589361198694, guid: 52f2f8f8746f90e4fa751e6cd2606808, type: 2}
+  - {fileID: 1150289253164868, guid: 52f2f8f8746f90e4fa751e6cd2606808, type: 2}
   - {fileID: 1915704453861690, guid: 07e63f1b70620cd4fbfa526c126d5f69, type: 2}
   - {fileID: 1712413411273056, guid: e05c708947924294a995c39f5cfb50a8, type: 2}
   - {fileID: 1794285665682542, guid: 734a033d4a50d4e4dae73db15efd0046, type: 2}
   - {fileID: 1717921489312388, guid: 093b8533babc810419a639ef69fdcd5b, type: 2}
-  - {fileID: 1279226515551586, guid: a8709c5019b6b2043b06a79a47a014d7, type: 2}
+  - {fileID: 1268511173204360, guid: a8709c5019b6b2043b06a79a47a014d7, type: 2}
   - {fileID: 1714472956139026, guid: 9813b0e744789b745bd42e099be6cd05, type: 2}
   - {fileID: 1360955238524346, guid: 26a21ac337c8fbf4c841ae3e2044e48b, type: 2}
   "Played\u0421ards_Player": []
@@ -3862,6 +3863,8 @@ MonoBehaviour:
   BotTurn: 0
   CardDelete: 0
   EndOfRound: 0
+  EnemyRound: 0
+  PlayerRound: 0
   RoundCount: 0
   BotCardCount: 0
   PlayerCardCount: 0

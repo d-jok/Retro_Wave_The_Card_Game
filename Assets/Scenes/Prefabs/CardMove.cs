@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class CardMove : MonoBehaviour
 {
-
     Vector3 Pos;
     Vector3 CardPos;
 
@@ -17,6 +16,8 @@ public class CardMove : MonoBehaviour
 
     bool MouseDown = false;
     bool CardCheck = true;
+    [HideInInspector]
+    public bool AbilityCheck;
 
     [HideInInspector]
     public bool CardOnField = false;   //if card on battle field
@@ -24,6 +25,7 @@ public class CardMove : MonoBehaviour
     void Start()
     {
         CardOnField = true;
+        AbilityCheck = false;
     }
 
     void Update()
@@ -58,22 +60,26 @@ public class CardMove : MonoBehaviour
 
     public void LineUp()
     {
-        
-
+      
         if (CardOnField == true)
         {
             if (FindObjectOfType<AttackField>().yes == true && FindObjectOfType<AttackField>().FieldFull == false)
             {
                 this.transform.position = new Vector3(FindObjectOfType<AttackField>().FieldPosX, FindObjectOfType<AttackField>().FieldPosY, FindObjectOfType<AttackField>().FieldPosZ);
 
-                FindObjectOfType<CardManager>().PlayedСards_Player[FindObjectOfType<AttackField>().CardCount] = this.gameObject.GetComponent<CardInfo>().id;
+                //FindObjectOfType<CardManager>().PlayedСards_Player[FindObjectOfType<AttackField>().CardCount] = this.gameObject.GetComponent<CardInfo>().id;
 
+                FindObjectOfType<CardManager>().PlayerTemp.Add(this.gameObject.GetComponent<CardInfo>().id);    //List
+
+                FindObjectOfType<GameProcess>().PlayerCardCount++;
 
                 FindObjectOfType<GameProcess>().YourTurn = false;
 
                 FindObjectOfType<AttackField>().CardCount++;
 
                 Debug.Log(FindObjectOfType<AttackField>().CardCount);
+
+                this.AbilityCheck = true;    //Ability
 
                 Power = GetComponent<CardInfo>().Power; //get power of card
                 //Debug.Log(Power);
@@ -103,7 +109,7 @@ public class CardMove : MonoBehaviour
                     }
                 }
 
-                FindObjectOfType<PowerCounter>().MyCounter(Power);
+                //FindObjectOfType<PowerCounter>().MyCounter(Power);
             }
 
             //Card Return Back In Hand
